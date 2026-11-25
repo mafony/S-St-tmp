@@ -18,14 +18,14 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.11.0'
+          version: '6.11.2'
           host: 'windows'
           target: 'desktop'
           arch: 'win64_msvc2022_64'
-          modules: 'qtserialport qtgraphs qtcharts qtpositioning qt5compat qtshadertools'
+          modules: 'qtserialport qtgraphs qtcharts qtpositioning qtconnectivity qt5compat qtshadertools'
 
       - name: Configure CMake
-        run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DPRODUCTION_OPTIMIZATION=ON -DCMAKE_BUILD_TYPE=Release
 
       - name: Build project
         run: cmake --build build --config Release --parallel
@@ -33,8 +33,8 @@ jobs:
       - name: Package binaries
         run: |
           mkdir release_pkg
-          copy build\Release\Serial-Studio.exe release_pkg\
-          windeployqt --qmldir app/qml release_pkg\Serial-Studio.exe
+          copy build\Release\*.exe release_pkg\
+          windeployqt --qmldir app/qml release_pkg\*.exe
 
       - name: Upload Windows EXE
         uses: actions/upload-artifact@v4
