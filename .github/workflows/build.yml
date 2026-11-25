@@ -27,7 +27,7 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: 'win64_msvc2022_64'
-          modules: 'qtserialport qtserialbus qtwebsockets qtgraphs qtquick3d qtcharts qtpositioning qtconnectivity qt5compat qtshadertools'
+          modules: 'qtserialport qtserialbus qtwebsockets qtwebengine qtwebchannel qtgraphs qtquick3d qtcharts qtpositioning qtconnectivity qt5compat qtshadertools'
 
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
