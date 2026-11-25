@@ -20,15 +20,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: '6.11.2'
-          host: 'windows'
-          target: 'desktop'
-          arch: 'win64_msvc2022_64'
-          base-url: 'https://qt.io'
-          modules: 'qtserialport qtserialbus qtwebsockets qtwebengine qtwebchannel qtgraphs qtquick3d qtcharts qtpositioning qtconnectivity qt5compat qtshadertools'
+      - name: Install Qt 6.11 via aqt
+        shell: cmd
+        run: |
+          python -m pip install --upgrade pip aqtinstall
+          python -m aqt list-qt windows desktop
+          python -m aqt install-qt windows desktop 6.11.2 win64_msvc2022_64 -O D:\Qt -m qtserialport qtserialbus qtwebsockets qtwebengine qtwebchannel qtgraphs qtquick3d qtcharts qtpositioning qtconnectivity qt5compat qtshadertools
 
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
@@ -38,6 +35,8 @@ jobs:
       - name: Build and Package
         shell: cmd
         run: |
+          set PATH=D:\Qt\6.11.2\msvc2022_64\bin;%PATH%
+          set CMAKE_PREFIX_PATH=D:\Qt\6.11.2\msvc2022_64
           cmake -B build -G "Ninja" -DPRODUCTION_OPTIMIZATION=ON -DCMAKE_BUILD_TYPE=Release
           cmake --build build --parallel
           mkdir release_pkg
