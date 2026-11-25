@@ -23,10 +23,11 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.11.*'
+          version: '6.11.2'
           host: 'windows'
           target: 'desktop'
           arch: 'win64_msvc2022_64'
+          base-url: 'https://qt.io'
           modules: 'qtserialport qtserialbus qtwebsockets qtwebengine qtwebchannel qtgraphs qtquick3d qtcharts qtpositioning qtconnectivity qt5compat qtshadertools'
 
       - name: Setup MSVC
